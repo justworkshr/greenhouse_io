@@ -5,11 +5,12 @@ module GreenhouseIo
 
     PERMITTED_OPTIONS = [:page, :per_page, :submitted_after, :submitted_before]
 
-    attr_accessor :api_token, :rate_limit, :rate_limit_remaining
+    attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
     base_uri 'https://harvest.greenhouse.io/v1'
 
     def initialize(api_token = nil)
       @api_token = api_token || GreenhouseIo.configuration.api_token
+      self.link = headers['link'].to_s
     end
     
     def eeoc(id = nil, options = {})
