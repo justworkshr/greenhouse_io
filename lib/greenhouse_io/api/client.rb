@@ -10,7 +10,6 @@ module GreenhouseIo
 
     def initialize(api_token = nil)
       @api_token = api_token || GreenhouseIo.configuration.api_token
-      self.link = headers['link'].to_s
     end
     
     def eeoc(id = nil, options = {})
@@ -92,6 +91,7 @@ module GreenhouseIo
     def set_rate_limits(headers)
       self.rate_limit = headers['x-ratelimit-limit'].to_i
       self.rate_limit_remaining = headers['x-ratelimit-remaining'].to_i
+      self.link = headers['link'].to_s
     end
   end
 end
