@@ -3,7 +3,7 @@ module GreenhouseIo
     include HTTMultiParty
     include GreenhouseIo::API
 
-    PERMITTED_OPTIONS = [:page, :per_page, :submitted_after, :submitted_before]
+    PERMITTED_OPTIONS = [:page, :per_page, :submitted_after, :submitted_before, :since_id]
 
     attr_accessor :api_token, :rate_limit, :rate_limit_remaining, :link
     base_uri 'https://harvest.greenhouse.io/v1'
@@ -13,7 +13,7 @@ module GreenhouseIo
     end
     
     def eeoc(id = nil, options = {})
-      get_from_harvest_api "/applications#{path_id(id)}/eeoc", options
+      get_from_harvest_api "/eeoc#{path_id(id)}", options
     end
 
     def offices(id = nil, options = {})
@@ -83,8 +83,6 @@ module GreenhouseIo
       set_rate_limits(response.headers)
       if response.code == 200
         parse_json(response)
-      elsif response.code == 404
-        return nil
       else
         raise GreenhouseIo::Error.new(response.code)
       end
