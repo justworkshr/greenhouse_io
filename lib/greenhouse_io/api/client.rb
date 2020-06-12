@@ -13,7 +13,7 @@ module GreenhouseIo
     end
     
     def eeoc(id = nil, options = {})
-      get_from_harvest_api "/eeoc#{path_id(id)}", options
+      get_from_harvest_api "/applications/#{path_id(id)}/eeoc", options
     end
 
     def offices(id = nil, options = {})
