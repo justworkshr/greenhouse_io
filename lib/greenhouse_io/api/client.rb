@@ -13,7 +13,7 @@ module GreenhouseIo
     end
     
     def eeoc(id = nil, options = {})
-      get_from_harvest_api "/applications/#{path_id(id)}/eeoc", options
+      get_from_harvest_api "/applications#{path_id(id)}/eeoc", options
     end
 
     def offices(id = nil, options = {})
@@ -83,6 +83,8 @@ module GreenhouseIo
       set_rate_limits(response.headers)
       if response.code == 200
         parse_json(response)
+      elsif response.code == 404
+        return nil
       else
         raise GreenhouseIo::Error.new(response.code)
       end
